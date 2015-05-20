@@ -1,0 +1,7 @@
+# copy the content of this file to karaf
+
+#The bundles are replaced by shiro-web
+#bundle:install mvn:org.apache.felix/org.apache.felix.http.bundle/2.2.0
+#bundle:install mvn:org.apache.felix/org.apache.felix.http.whiteboard/2.3.2
+
+bundle:install mvn:org.nordapp.web/org.nordapp.web.page/0.0.1-SNAPSHOT

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<feature name="nordapp-web-service" version="1.0.0">
+    <bundle start-level="80" start="false">mvn:org.apache.felix/org.apache.felix.http.bundle/2.2.0</bundle>
+    <bundle start-level="85" start="false">mvn:org.apache.felix/org.apache.felix.http.whiteboard/2.3.2</bundle>
+    <bundle start-level="85" start="false">mvn:org.nordapp.web/org.nordapp.web.page/0.0.1-SNAPSHOT</bundle>
+</feature>
