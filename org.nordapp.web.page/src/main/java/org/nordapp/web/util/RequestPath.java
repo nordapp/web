@@ -112,6 +112,49 @@ public class RequestPath {
 	}
 	
 	/**
+	 * Returns the path of the request URI behind the servlet path
+	 * 
+	 * @param req
+	 * @param startPathIndex The index of the path '/path' or '/id-of-the-mandator/id-of-the-session/path'
+	 * @return
+	 */
+	public static String[] getPath(HttpServletRequest req, int startPathIndex) {
+		
+		String uri = req.getRequestURI();
+		if(uri==null)
+			return new String[0];
+		
+		String srv = req.getServletPath();
+		if(srv==null)
+			return new String[0];
+		
+		int s = srv.length(), e = uri.length();
+		if(s>=e)
+			return new String[0];
+		
+		if(uri.charAt(s)=='/')
+			s++;
+		if(uri.endsWith("/"))
+			e--;
+		if(s==e)
+			return new String[0];
+		
+		String res = uri.substring(s, e);
+		String[] arr1 = res.split("/");
+		
+		if(startPathIndex==0)
+			return arr1;
+		
+		int len = arr1.length-startPathIndex;
+		if(len<1)
+			return new String[0];
+		
+		String[] arr2 = new String[len];
+		System.arraycopy(arr1, startPathIndex, arr2, 0, len);
+		return arr2;
+	}
+	
+	/**
 	 * Replaces every occurrence of a field as a key in the map by the value of the map.
 	 * 
 	 * @param array The array to look in.

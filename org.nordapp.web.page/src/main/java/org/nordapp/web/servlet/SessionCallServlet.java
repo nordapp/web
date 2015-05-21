@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,6 +53,9 @@ import org.i3xx.step.zero.service.model.mandator.Mandator;
 import org.i3xx.util.basic.io.FilePath;
 import org.nordapp.web.util.GsonHashMapDeserializer;
 import org.nordapp.web.util.RequestPath;
+import org.nordapp.web.util.StateUtil;
+import org.nordapp.web.util.link.LinkHeader;
+import org.nordapp.web.util.link.LinkHeaderImpl;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -249,25 +254,29 @@ public class SessionCallServlet extends HttpServlet {
 		Session mSession = SessionServiceImpl.getSession(context, cert, ctrl.getMandatorID(), "0");
 		Integer baseIndex = ((Integer)mSession.getValue( Session.ENGINE_BASE_INDEX )).intValue();
 		//String sessionId = session.getId();
-		mSession = SessionServiceImpl.getSession(context, cert, ctrl.getMandatorID(), ctrl.decodeCert().toString());
 		
-		String[] elem = RequestPath.getPath(req);
+		String[] elem = RequestPath.getPath(req, ctrl.getPathStartIndex());
 		if(elem.length==0)
 			throw new MalformedURLException("The URL needs the form '"+
-					req.getServletPath()+"/function-id' but was '"+
-					req.getRequestURI()+"'");
+					req.getServletPath()+(ctrl.getPathStartIndex()==0?"":"mandator-id/session-id")+
+					"/function-id' but was '"+req.getRequestURI()+"'");
 		
 		BigInteger engineId = ctrl.decodeCert();
-		String functionId = elem.length>=1 ? elem[0] : null;
+		String functionId = elem[0];
 		
 		StringBuffer buffer = new StringBuffer();
+		List<String> states = new ArrayList<String>();
 		ResponseHandler rsHdl = new ResponseHandler(context, ctrl);
 		
+		EngineBaseService engineBaseService = null;
+		Engine engine = null;
+		BigInteger anonId = null;
+		boolean anonymous = false;
 		try{
 			//
 			// Gets the engine base service
 			//
-			EngineBaseService engineBaseService = 
+			engineBaseService = 
 					EngineBaseServiceImpl.getService(context, ctrl.getMandatorID(), String.valueOf(baseIndex));
 			if(engineBaseService==null)
 				throw new IOException("The mandator base service is not available (maybe down or a version conflict).");
@@ -279,42 +288,126 @@ public class SessionCallServlet extends HttpServlet {
 			if(mandator==null)
 				throw new IOException("The mandator service is not available (maybe down or a version conflict).");
 			
-			Engine engine = engineBaseService.getEngine(engineId);
-			if( !engine.isLogin())
-				throw new IllegalAccessException("There is no login to this session.");
+			//
+			// getEngine() creates one, if there is no engine.
+			//
+			
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put(EngineBaseService.IS_AVAILABLE, Boolean.TRUE);
+			params.put(EngineBaseService.IS_LOGIN, Boolean.TRUE);
+			engine = engineBaseService.queryEngine(engineId, params);
+			
+			if( engine==null ) {
+				
+				String key = ctrl.getGroupID()+"."+ctrl.getArtifactID()+".anonymous-support";
+				if( Boolean.valueOf( mandator.getProperty(key) ).booleanValue() ){
+					key = ctrl.getGroupID()+"."+ctrl.getArtifactID()+".anonymous-session";
+					String val = mandator.getProperty(key);
+					anonId = val==null ? BigInteger.ONE : new BigInteger(val);
+					
+					//
+					// TODO cache this to avoid the initialization each call
+					//
+					
+					//setup the bundles
+					engineBaseService.setupStore(anonId);
+					//uses the login-flag to signal the init state
+					engine = engineBaseService.getEngine(anonId);
+					//cleanup the old state
+					if( ! engine.hasNext()){
+						engine.reinit();
+					}
+					
+					anonymous = true;
+				}else
+					throw new IllegalAccessException("There is no login to this session (needs login).");
+				
+				//engineBaseService.dropEngine(engineId);
+			}
 			
 			//
 			// Set the parameter to the user-session
 			//
-			if(mSession!=null && data!=null && data.size()>0) {
-				for(String key : data.keySet()) {
-					Object value = data.get(key);
-					
-					logger.trace("Set data to session mandatorId:{}, sessionId:{}, key:{}, value:{}", ctrl.getMandatorID(), ctrl.getCertID(), key, value);
-					mSession.setValue(key, value);
-				}//for
-			}//fi
+			if( ! anonymous) {
+				mSession = SessionServiceImpl.getSession(context, cert, ctrl.getMandatorID(), ctrl.decodeCert().toString());
+				
+				if(mSession!=null && data!=null && data.size()>0) {
+					for(String key : data.keySet()) {
+						Object value = data.get(key);
+						
+						logger.trace("Set data to session mandatorId:{}, sessionId:{}, key:{}, value:{}", ctrl.getMandatorID(), ctrl.getCertID(), key, value);
+						mSession.setValue(key, value);
+					}//for
+				}//fi
+			}
 			
 			try{
 				engine.setLocalValue(Mandator.MANDATORID, ctrl.getMandatorID());
+				engine.setLocalValue("anonymous", new Boolean(anonymous));
 				engine.setLocalValue("sessionId", ctrl.decodeCert().toString());
 				engine.setLocalValue("nativeSessionId", ctrl.decodeCert());
+				engine.setLocalValue("immediate.fields", data==null ? null : Collections.unmodifiableMap(data));
+				engine.setLocalValue("immediate.states", states);
 				
 				engine.call(functionId);
 			}catch(Exception e){
 				e.printStackTrace();
 			}
 			
-			rsHdl.getSessionData(buffer, mSession);
+			Object val = engine.getLocalValue("immediate.results");
+			if(val!=null) {
+				logger.trace("immediate.results:{}", val);
+				Gson gson = new Gson();
+				buffer.append( gson.toJson(val) );
+			}
 			
 		}catch(Exception e) {
 			logger.error("Error running the step.", e);
+		}finally{
+			
+			if( anonymous ) {
+				
+				//
+				// TODO cache this to avoid the initialization each call
+				//
+				
+				engine.exit();
+				try {
+					engineBaseService.dropEngine(anonId);
+				} catch (Exception e) {
+					logger.error("Error running the step.", e);
+				}
+			}//fi
 		}
 		
 		//
 		//
 		//
 		byte[] bytes = buffer.toString().getBytes();
+		
+		//
+		// Set RESTful states to HTTP links
+		//
+		
+		LinkHeader lhdr = new LinkHeaderImpl();
+		if( ctrl.isStateful() ) {
+			StateUtil.setDefault(lhdr, req);
+			
+			lhdr.setLink_mandator( ctrl.getMandatorID() );
+			lhdr.setLink_uuid( ctrl.getCertID() );
+			
+			for(String state : states) {
+				if(state==null)
+					continue;
+				int k = state.trim().lastIndexOf(' ');
+				if(k<1 || k==(state.length()-1))
+					continue;
+				lhdr.add(state.substring(0, k), state.substring(k+1));
+			}
+			//StateUtil.setState(context, ctrl, lhdr, "init.state");
+			logger.debug( lhdr.toString() );
+		}
+		rsHdl.setLinkHeader(resp, lhdr.toString());
 		
 		//
 		// Send the resource
