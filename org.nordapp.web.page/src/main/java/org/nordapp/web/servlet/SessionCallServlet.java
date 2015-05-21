@@ -346,6 +346,7 @@ public class SessionCallServlet extends HttpServlet {
 				engine.setLocalValue("anonymous", new Boolean(anonymous));
 				engine.setLocalValue("sessionId", ctrl.decodeCert().toString());
 				engine.setLocalValue("nativeSessionId", ctrl.decodeCert());
+				engine.setLocalValue("immediate.result", null);
 				engine.setLocalValue("immediate.fields", data==null ? null : Collections.unmodifiableMap(data));
 				engine.setLocalValue("immediate.states", states);
 				
@@ -354,11 +355,11 @@ public class SessionCallServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			Object val = engine.getLocalValue("immediate.results");
+			Object val = engine.getLocalValue("immediate.result");
 			if(val!=null) {
 				logger.trace("immediate.results:{}", val);
-				Gson gson = new Gson();
-				buffer.append( gson.toJson(val) );
+				//Gson gson = new Gson();
+				buffer.append( String.valueOf(val) );
 			}
 			
 		}catch(Exception e) {
