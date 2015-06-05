@@ -90,20 +90,28 @@ public class InitServlet extends HttpServlet {
 		ctrl.generateCert();
 		
 		//
-		// Create short time password
-		//
-		ctrl.setPasswordTimeout(new Integer(60000));
-		ctrl.setShortTimePassword();
-		ctrl.watchShortTimePassword();
-		
-		//
 		// Gets the configured mandator.
 		//
 		Mandator mandator = MandatorServiceImpl.getMandator(context, mandatorId);
 		if(mandator==null)
 			throw new IOException("The mandator '"+mandatorId+"' is not available on this system.");
 		
-		logger.debug("The mandator {} is available at the path '{}'.", mandatorId, mandator.getPath());
+		String pwdTo = mandator.getProperty("password.timeout");
+		Integer pwdTimeout = new Integer(60000);
+		if(pwdTo!=null) {
+			try {
+				pwdTimeout = Integer.valueOf(pwdTo);
+			}catch(Exception ee){
+				logger.debug("The timeout '{}' has not a number format. Exception: {}", pwdTo, ee.toString());
+			}
+		}
+		
+		//
+		// Create short time password
+		//
+		ctrl.setPasswordTimeout(pwdTimeout);
+		ctrl.setShortTimePassword();
+		ctrl.watchShortTimePassword();
 		
 		//
 		//
@@ -122,6 +130,13 @@ public class InitServlet extends HttpServlet {
 		
 		String dest = RequestPath.replacePath(resourcePath, loginHtm);
 		
+		if(logger.isDebugEnabled() || logger.isTraceEnabled()) {
+			logger.debug("Initialize app mandator: {}, group: {}, artifact: {}, timeout: {}, path: '{}', page: {}.",
+					mandatorId, elem[1], elem[2], pwdTimeout, mandator.getPath(), dest);
+		}else{
+			logger.info("Initialize app mandator: {}, group: {}, artifact: {}, timeout: {}", mandatorId, elem[1], elem[2], pwdTimeout);
+		}
+		
 		//
 		// Set RESTful states to HTTP links
 		//
@@ -137,7 +152,7 @@ public class InitServlet extends HttpServlet {
 			lhdr.setLink_uuid( ctrl.getCertID() );
 			StateUtil.setState(context, ctrl, lhdr, "init.state");
 			
-			logger.info( lhdr.toString() );
+			logger.debug( lhdr.toString() );
 			ctrl.setSessionFlags(SessionControl.FLAG_SESSION_IS_STATEFUL, true);
 		}catch(IOException io){
 			logger.debug("The session is not stateful", io);
