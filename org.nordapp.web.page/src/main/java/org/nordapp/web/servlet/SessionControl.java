@@ -94,6 +94,11 @@ public interface SessionControl {
 	public static final String passwordTimeoutKey = new String("passwordTimeout");
 	
 	/**
+	 * The key of the logon timeout
+	 */
+	public static final String logonTimeoutKey = new String("logonTimeout");
+	
+	/**
 	 * The key of the mandator
 	 */
 	public static final String mandatorIDKey = new String("mandatorID");
@@ -243,6 +248,15 @@ public interface SessionControl {
 	 * Clears the session data from the |0| session
 	 */
 	void clearTempSession();
+	
+	/**
+	 * Adds a time based call to the logout servlet
+	 * 
+	 * @param sessionId The current session id
+	 * @param uri The URL to call
+	 * @param timeout The timeout
+	 */
+	void addAutoLogout(String sessionId, final String uri, long timeout);
 	
 	//
 	//

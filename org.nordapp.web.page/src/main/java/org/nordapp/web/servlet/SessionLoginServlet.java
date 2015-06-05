@@ -44,6 +44,8 @@ import org.i3xx.step.uno.model.daemon.Engine;
 import org.i3xx.step.uno.model.service.EngineBaseService;
 import org.i3xx.step.zero.security.impl.shiro.NaUsernamePasswordTokenImpl;
 import org.i3xx.step.zero.security.model.NaAuthenticationToken;
+import org.i3xx.step.zero.service.impl.mandator.MandatorServiceImpl;
+import org.i3xx.step.zero.service.model.mandator.Mandator;
 import org.nordapp.web.util.RequestPath;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -141,13 +143,29 @@ public class SessionLoginServlet extends HttpServlet {
 		scSession.setAttribute(SessionControl.certIDKey, ctrl.getCertID());
 		
 		// ============================ ======== ===========================
-		
+
 		//
 		// Session service
 		//
 		String cert = null;
 		String sessionId = ctrl.decodeCert().toString();
 		String sessionTimeout = getInitParameter("session-timeout");
+		
+		//Read the session timeout
+		Mandator mandator = MandatorServiceImpl.getMandator(context, mandatorId);
+		if(mandator==null)
+			throw new IOException("The mandator '"+mandatorId+"' is not available on this system.");
+		
+		String tm = mandator.getProperty("session.timeout");
+		if(tm!=null) {
+			try {
+				//verify the value
+				Long.parseLong(tm);
+				sessionTimeout = tm;
+			}catch(Exception ee){
+				logger.debug("The session timeout '{}' has not a number format. Exception: {}", tm, ee.toString());
+			}
+		}
 		
 		//The '0' session of the mandator
 		Session mSession = SessionServiceImpl.getSession(context, cert, ctrl.getMandatorID(), "0");
@@ -194,7 +212,14 @@ public class SessionLoginServlet extends HttpServlet {
 				baseService.saveEngine(jsSession);
 				
 				//TODO:
-				req.getSession().setMaxInactiveInterval(8*60*60*1000);
+				req.getSession().setMaxInactiveInterval(Integer.parseInt(sessionTimeout));
+				
+				//
+				// Auto logout
+				//
+				String uri = req.getRequestURI();
+				uri = uri.replaceFirst("login", "logout");
+				ctrl.addAutoLogout(sessionId, uri, Long.parseLong(sessionTimeout));
 				
 				logger.info("The session {} is created (mandator:{}).", mSession.getSessionId(), ctrl.getMandatorID());
 			}catch(Throwable t){
