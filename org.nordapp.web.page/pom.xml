@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.nordapp.web</groupId>
   <artifactId>org.nordapp.web.page</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>NordApp OfficeBase :: Web</name>
   <url>http://maven.apache.org</url>
@@ -11,71 +11,50 @@
   <properties>
   	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
   	<project.inceptionYear>2014</project.inceptionYear>
-	<org.i3xx.util.basic.version>0.0.1-SNAPSHOT</org.i3xx.util.basic.version>
-	<org.i3xx.util.general.setup.version>0.0.1-SNAPSHOT</org.i3xx.util.general.setup.version>
-	<org.i3xx.util.platform.version>0.0.1-SNAPSHOT</org.i3xx.util.platform.version>
-	<org.i3xx.util.symbol.version>0.0.1-SNAPSHOT</org.i3xx.util.symbol.version>
-	<org.i3xx.util.store.version>1.0.4-SNAPSHOT</org.i3xx.util.store.version>
-	<org.i3xx.step.zero.version>0.0.2-SNAPSHOT</org.i3xx.step.zero.version>
-	<org.i3xx.step.uno.version>0.0.1-SNAPSHOT</org.i3xx.step.uno.version>
-	<org.i3xx.step.due.version>0.0.1-SNAPSHOT</org.i3xx.step.due.version>
-	<org.i3xx.step.store.version>0.0.1-SNAPSHOT</org.i3xx.step.store.version>
-	<org.i3xx.step.mongo.version>0.0.1-SNAPSHOT</org.i3xx.step.mongo.version>
-	<org.i3xx.step.clock.version>0.0.1-SNAPSHOT</org.i3xx.step.clock.version>
-	<org.i3xx.step.fileinfo.version>0.0.1-SNAPSHOT</org.i3xx.step.fileinfo.version>
   </properties>
   
   <parent>
-    <groupId>org.i3xx.project</groupId>
-    <artifactId>parent-project</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <groupId>org.i3xx.parent</groupId>
+    <artifactId>parent-web-project</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
   
   <dependencies>
  	<dependency>
   		<groupId>org.i3xx.step</groupId>
   		<artifactId>org.i3xx.step.zero</artifactId>
-  		<version>${org.i3xx.step.zero.version}</version>
   	</dependency>
  	<dependency>
   		<groupId>org.i3xx.step</groupId>
   		<artifactId>org.i3xx.step.uno</artifactId>
-  		<version>${org.i3xx.step.uno.version}</version>
   	</dependency>
  	<dependency>
   		<groupId>org.i3xx.step</groupId>
   		<artifactId>org.i3xx.step.due</artifactId>
-  		<version>${org.i3xx.step.due.version}</version>
   	</dependency>
  	<dependency>
   		<groupId>org.i3xx.step</groupId>
   		<artifactId>org.i3xx.step.mongo</artifactId>
-  		<version>${org.i3xx.step.mongo.version}</version>
   	</dependency>
  	<dependency>
   		<groupId>org.i3xx.step</groupId>
   		<artifactId>org.i3xx.step.store</artifactId>
-  		<version>${org.i3xx.step.store.version}</version>
   	</dependency>
  	<dependency>
   		<groupId>org.i3xx.step</groupId>
   		<artifactId>org.i3xx.step.clock</artifactId>
-  		<version>${org.i3xx.step.clock.version}</version>
   	</dependency>
  	<dependency>
   		<groupId>org.i3xx.step</groupId>
   		<artifactId>org.i3xx.step.fileinfo</artifactId>
-  		<version>${org.i3xx.step.fileinfo.version}</version>
   	</dependency>
 	<dependency>
 		<groupId>commons-beanutils</groupId>
 		<artifactId>commons-beanutils-core</artifactId>
-		<version>1.8.3</version>
 	</dependency>
 	<dependency>
 		<groupId>commons-codec</groupId>
 		<artifactId>commons-codec</artifactId>
-		<version>1.10</version>
 	</dependency>
 	<dependency>
 		<groupId>commons-io</groupId>
@@ -85,27 +64,22 @@
 	<dependency>
 		<groupId>commons-fileupload</groupId>
 		<artifactId>commons-fileupload</artifactId>
-		<version>1.3.1</version>
 	</dependency>
 	<dependency>
 		<groupId>portlet-api</groupId>
 		<artifactId>portlet-api</artifactId>
-		<version>1.0</version>
 	</dependency>
 	<dependency>
 		<groupId>org.apache.felix</groupId>
 		<artifactId>org.apache.felix.configadmin</artifactId>
-		<version>1.8.0</version>
 	</dependency>
 	<dependency>
 		<groupId>org.apache.karaf.shell</groupId>
 		<artifactId>org.apache.karaf.shell.console</artifactId>
-		<version>3.0.3</version>
 	</dependency>
 	<dependency>
 		<groupId>org.osgi</groupId>
-		<artifactId>core</artifactId>
-		<version>4.3.0</version>
+		<artifactId>org.osgi.core</artifactId>
 	</dependency>
 	
 	
@@ -117,52 +91,42 @@
 	<dependency>
 	    <groupId>javax.servlet</groupId>
 	    <artifactId>javax.servlet-api</artifactId>
-	    <version>3.0.1</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.felix</groupId>
 	  <artifactId>org.apache.felix.http.api</artifactId>
-	  <version>2.3.0</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.felix</groupId>
 	  <artifactId>org.apache.felix.http.base</artifactId>
-	  <version>2.3.0</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.felix</groupId>
 	  <artifactId>org.apache.felix.http.bridge</artifactId>
-	  <version>2.3.0</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.felix</groupId>
 	  <artifactId>org.apache.felix.http.bundle</artifactId>
-	  <version>2.3.0</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.felix</groupId>
 	  <artifactId>org.apache.felix.http.cometd</artifactId>
-	  <version>2.3.0</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.felix</groupId>
 	  <artifactId>org.apache.felix.http.jetty</artifactId>
-	  <version>2.3.0</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.felix</groupId>
 	  <artifactId>org.apache.felix.http.proxy</artifactId>
-	  <version>2.3.0</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.felix</groupId>
 	  <artifactId>org.apache.felix.http.whiteboard</artifactId>
-	  <version>2.3.0</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.felix</groupId>
 	  <artifactId>org.apache.felix.http.sslfilter</artifactId>
-	  <version>0.1.0</version>
 	</dependency>
 	
 	
@@ -228,25 +192,25 @@
 						org.apache.shiro.subject,
 						org.apache.shiro.util,<!--  -->
 						org.eclipse.jetty.server,
-						org.i3xx.step.mongo.core.activator;version="${org.i3xx.step.mongo.version}",
-						org.i3xx.step.mongo.core.model;version="${org.i3xx.step.mongo.version}",
-						org.i3xx.step.mongo.core.impl;version="${org.i3xx.step.mongo.version}",
-						org.i3xx.step.mongo.core.util;version="${org.i3xx.step.mongo.version}",
-						org.i3xx.step.mongo.service.impl;version="${org.i3xx.step.mongo.version}",
-						org.i3xx.step.mongo.service.model;version="${org.i3xx.step.mongo.version}",
-						org.i3xx.step.clock.service.model;version="${org.i3xx.step.clock.version}",
-						org.i3xx.step.fileinfo.service.model;version="${org.i3xx.step.fileinfo.version}",
-						org.i3xx.step.due.service.impl;version="${org.i3xx.step.due.version}",
-						org.i3xx.step.due.service.model;version="${org.i3xx.step.due.version}",
-						org.i3xx.step.uno.impl.service;version="${org.i3xx.step.uno.version}",
-						org.i3xx.step.uno.model.daemon;version="${org.i3xx.step.uno.version}",
-						org.i3xx.step.uno.model.service;version="${org.i3xx.step.uno.version}",
-						org.i3xx.step.zero.security;version="${org.i3xx.step.zero.version}",
-						org.i3xx.step.zero.security.impl.shiro;version="${org.i3xx.step.zero.version}",
-						org.i3xx.step.zero.security.model;version="${org.i3xx.step.zero.version}",
-						org.i3xx.step.zero.service.impl.mandator;version="${org.i3xx.step.zero.version}",
-						org.i3xx.step.zero.service.model.mandator;version="${org.i3xx.step.zero.version}",
-						org.i3xx.util.basic.io;version="${org.i3xx.util.basic.version}",
+						org.i3xx.step.mongo.core.activator;version="${step.mongo.version}",
+						org.i3xx.step.mongo.core.model;version="${step.mongo.version}",
+						org.i3xx.step.mongo.core.impl;version="${step.mongo.version}",
+						org.i3xx.step.mongo.core.util;version="${step.mongo.version}",
+						org.i3xx.step.mongo.service.impl;version="${step.mongo.version}",
+						org.i3xx.step.mongo.service.model;version="${step.mongo.version}",
+						org.i3xx.step.clock.service.model;version="${step.clock.version}",
+						org.i3xx.step.fileinfo.service.model;version="${step.fileinfo.version}",
+						org.i3xx.step.due.service.impl;version="${step.due.version}",
+						org.i3xx.step.due.service.model;version="${step.due.version}",
+						org.i3xx.step.uno.impl.service;version="${step.uno.version}",
+						org.i3xx.step.uno.model.daemon;version="${step.uno.version}",
+						org.i3xx.step.uno.model.service;version="${step.uno.version}",
+						org.i3xx.step.zero.security;version="${step.zero.version}",
+						org.i3xx.step.zero.security.impl.shiro;version="${step.zero.version}",
+						org.i3xx.step.zero.security.model;version="${step.zero.version}",
+						org.i3xx.step.zero.service.impl.mandator;version="${step.zero.version}",
+						org.i3xx.step.zero.service.model.mandator;version="${step.zero.version}",
+						org.i3xx.util.basic.io;version="${util.basic.version}",
 						<!-- org.osgi.service.blueprint, -->
 						<!-- org.osgi.service.cm, -->
 						org.osgi.service.http,
