@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.i3xx.parent</groupId>
+  <artifactId>parent-web-project</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>parent-web-project</name>
+  <url>http://maven.apache.org</url>
+  
+  <parent>
+    <groupId>org.i3xx.parent</groupId>
+    <artifactId>parent-step-project</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<project.inceptionYear>2015</project.inceptionYear>
+  </properties>
+
+  <dependencyManagement>
+	<dependencies>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.0.1</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>org.apache.felix.http.api</artifactId>
+		  <version>2.3.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>org.apache.felix.http.base</artifactId>
+		  <version>2.3.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>org.apache.felix.http.bridge</artifactId>
+		  <version>2.3.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>org.apache.felix.http.bundle</artifactId>
+		  <version>2.3.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>org.apache.felix.http.cometd</artifactId>
+		  <version>2.3.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>org.apache.felix.http.jetty</artifactId>
+		  <version>2.3.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>org.apache.felix.http.proxy</artifactId>
+		  <version>2.3.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>org.apache.felix.http.whiteboard</artifactId>
+		  <version>2.3.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>org.apache.felix.http.sslfilter</artifactId>
+		  <version>0.1.0</version>
+		</dependency>
+	</dependencies>
+  </dependencyManagement>
+  
+</project>
