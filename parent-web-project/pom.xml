@@ -21,6 +21,10 @@
   	<project.inceptionYear>2015</project.inceptionYear>
   </properties>
 
+  <scm>
+  	<developerConnection>scm:git:https://github.com/nordapp/web</developerConnection>
+  </scm>
+  
   <dependencyManagement>
 	<dependencies>
 		<dependency>
