@@ -58,8 +58,8 @@ public class HttpSessionControlImpl extends AbstractSessionControlImpl {
 	/**
 	 * Ensure the session is a new session
 	 * 
-	 * @return
-	 */
+	 * @return The flag
+	 */ 
 	public boolean ensureNew(Factory factory) {
 		if( session.isNew() )
 			return true;
@@ -73,7 +73,7 @@ public class HttpSessionControlImpl extends AbstractSessionControlImpl {
 	/**
 	 * Tests whether the session is valid or not.
 	 * 
-	 * @return
+	 * @return The flag
 	 */
 	public boolean isValid() {
 		return ( visitCount!=null );

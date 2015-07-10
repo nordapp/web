@@ -91,7 +91,7 @@ public class LinkHeaderFieldParser {
 	
 	/**
 	 * @param relationType
-	 * @return
+	 * @return The first target for the relation
 	 */
 	public String getFirstTargetForRelation(String relationType) {
 

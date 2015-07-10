@@ -161,7 +161,7 @@ public class NordApp implements BundleActivator {
 	/**
 	 * Creates a dictionary containing the default properties
 	 * 
-	 * @return
+	 * @return The dictionary
 	 */
 	private Dictionary<String, Object> getDefaultProps() {
 		Dictionary<String, Object> props = new Hashtable<String, Object>();
@@ -179,7 +179,7 @@ public class NordApp implements BundleActivator {
 	/**
 	 * Adds the default path
 	 * 
-	 * @param props
+	 * @param props The properties
 	 */
 	private void addDefaultPath(Dictionary<String, Object> props) {
 		//

@@ -80,46 +80,46 @@ public final class IOContainer {
 	}
 	
 	/**
-	 * @return
+	 * @return The field names as an array
 	 */
 	public String[] getFieldnames() {
 		return fields.keySet().toArray(new String[fields.size()]);
 	}
 	
 	/**
-	 * @param fieldname
-	 * @param field
+	 * @param fieldname The field name
+	 * @param field The field value
 	 */
 	public void setField(String fieldname, Object field) {
 		fields.put(fieldname, field);
 	}
 	
 	/**
-	 * @param fieldname
-	 * @return
+	 * @param fieldname The field name
+	 * @return The field value
 	 */
 	public Object getField(String fieldname) {
 		return fields.get(fieldname);
 	}
 	
 	/**
-	 * @return
+	 * @return The filenames as an array
 	 */
 	public String[] getFilenames() {
 		return files.keySet().toArray(new String[fields.size()]);
 	}
 	
 	/**
-	 * @param filename
-	 * @param file
+	 * @param filename The filename
+	 * @param file The file
 	 */
 	public void setFile(String filename, Object file) {
 		files.put(filename, file);
 	}
 	
 	/**
-	 * @param filename
-	 * @return
+	 * @param filename The filename
+	 * @return The file
 	 */
 	public Object getFile(String filename) {
 		return files.get(filename);

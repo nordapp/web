@@ -73,7 +73,7 @@ public class FileRedirector {
 	/**
 	 * Returns the source path.
 	 * 
-	 * @return
+	 * @return The source path
 	 */
 	public String getSourcePath() {
 		return sourcePath;
@@ -81,7 +81,7 @@ public class FileRedirector {
 	
 	/**
 	 * Returns the description of the type of the sourcePath.
-	 * @return
+	 * @return The description of the source path
 	 */
 	public String getTypeDescription(){
 		return typeDesc;
@@ -91,7 +91,7 @@ public class FileRedirector {
 	 * The file path of the resource.
 	 * 
 	 * @param root The root path of the file.
-	 * @return
+	 * @return The file path of the resource.
 	 */
 	public FilePath getFilePath(String root) {
 		
@@ -105,7 +105,7 @@ public class FileRedirector {
 	 * The file of the resource if the resource is a file.
 	 * 
 	 * @param root The root path of the file.
-	 * @return
+	 * @return The file of the resource
 	 */
 	public File getFileDestination(String root) {
 		

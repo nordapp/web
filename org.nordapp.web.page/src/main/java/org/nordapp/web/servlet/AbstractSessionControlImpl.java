@@ -134,8 +134,6 @@ public abstract class AbstractSessionControlImpl extends AbstractControlImpl {
 	 * Sets certID as short time password into the value
 	 * certIDKey of the '0' session of the mandator.
 	 * Needs the certID and the mandatorID set.
-	 * 
-	 * @param context The bundle context to get the service.
 	 */
 	public void setShortTimePassword() {
 		String cert = null; //TODO
@@ -165,8 +163,7 @@ public abstract class AbstractSessionControlImpl extends AbstractControlImpl {
 	 * of the '0' session of the mandator. The list will be created
 	 * if it is not present.
 	 * 
-	 * @param context The bundle context to get the service.
-	 * @return
+	 * @return The list of short time passwords
 	 */
 	public List<String> getShortTimePassword() {
 		String cert = null;

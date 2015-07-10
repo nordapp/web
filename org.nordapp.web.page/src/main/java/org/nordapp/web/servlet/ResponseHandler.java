@@ -160,7 +160,7 @@ public class ResponseHandler {
 	/**
 	 * Send an error message
 	 * 
-	 * @param The logger (Optional: null)
+	 * @param logger The logger (Optional: null)
 	 * @param e The exception
 	 * @param resp The HttpResponse
 	 * @param headers The response headers (Optional: null)

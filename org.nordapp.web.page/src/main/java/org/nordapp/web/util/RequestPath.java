@@ -38,7 +38,7 @@ public class RequestPath {
 	 * 
 	 * @param stmt The statement to search
 	 * @param array The array to search in.
-	 * @return
+	 * @return Returns the matching index
 	 */
 	public static int indexOf(String stmt, int off, String[] array){
 		for(int i=off;i<array.length;i++){
@@ -53,7 +53,7 @@ public class RequestPath {
 	 * 
 	 * @param pattern The pattern to match
 	 * @param array The array to search in.
-	 * @return
+	 * @return Returns the matching index
 	 */
 	public static int indexOf(Pattern pattern, int off, String[] array){
 		
@@ -69,7 +69,7 @@ public class RequestPath {
 	 * 
 	 * @param filter The filter that matches
 	 * @param array The array to search in.
-	 * @return
+	 * @return Returns the matching index
 	 */
 	public static int indexOf(Filter filter, int off, String[] array){
 		
@@ -83,8 +83,8 @@ public class RequestPath {
 	/**
 	 * Returns the path of the request URI behind the servlet path
 	 * 
-	 * @param req
-	 * @return
+	 * @param req The request.
+	 * @return The path of the request URI
 	 */
 	public static String[] getPath(HttpServletRequest req) {
 		
@@ -114,9 +114,9 @@ public class RequestPath {
 	/**
 	 * Returns the path of the request URI behind the servlet path
 	 * 
-	 * @param req
+	 * @param req The request
 	 * @param startPathIndex The index of the path '/path' or '/id-of-the-mandator/id-of-the-session/path'
-	 * @return
+	 * @return Returns the matching index
 	 */
 	public static String[] getPath(HttpServletRequest req, int startPathIndex) {
 		
@@ -160,7 +160,7 @@ public class RequestPath {
 	 * @param array The array to look in.
 	 * @param off The search offset
 	 * @param mapping The key value mapping
-	 * @return
+	 * @return The processed array.
 	 */
 	public static String[] replace(String[] array, int off, Map<String, String> mapping) {
 		String[] res = new String[array.length];
@@ -177,10 +177,9 @@ public class RequestPath {
 	 * Replaces every occurrence of the placeholder '{}' by the value of
 	 * the next argument and return the result as a String.
 	 * 
-	 * @param array The array to look in.
-	 * @param off The search offset
-	 * @param mapping The key value mapping
-	 * @return
+	 * @param stmt The input string.
+	 * @param args The arguments
+	 * @return The processed statement
 	 */
 	public static String replacePath(String stmt, String... args) {
 		StringBuffer res = new StringBuffer();
@@ -203,7 +202,7 @@ public class RequestPath {
 	 * Returns the mandator
 	 * 
 	 * @param req The request object
-	 * @return
+	 * @return The mandator
 	 * @throws MalformedURLException 
 	 */
 	public static String getMandator(HttpServletRequest req) throws MalformedURLException {
@@ -219,11 +218,10 @@ public class RequestPath {
 	}
 	
 	/**
-	 * Returns the mandator
+	 * Returns the session
 	 * 
-	 * @param servletAlias The alias name of the servlet used in the path
 	 * @param req The request object
-	 * @return
+	 * @return The session
 	 * @throws MalformedURLException 
 	 */
 	public static String getSession(HttpServletRequest req) throws MalformedURLException {
@@ -249,7 +247,7 @@ public class RequestPath {
 		 * 
 		 * @param index The current index of the iteration
 		 * @param array The iterated array
-		 * @return
+		 * @return The flag
 		 */
 		public boolean match(int index, String[] array);
 		

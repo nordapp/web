@@ -162,7 +162,7 @@ public abstract class AbstractControlImpl implements SessionControl {
 	/**
 	 * Decodes the public key of the certificate to a BigInteger
 	 * 
-	 * @return
+	 * @return The decoded public key (key only)
 	 */
 	public BigInteger decodeCert() {
 		byte[] buffer = Base64.decodeBase64( certID );
@@ -175,7 +175,7 @@ public abstract class AbstractControlImpl implements SessionControl {
 	/**
 	 * Decodes the security id to a BigInteger
 	 * 
-	 * @return
+	 * @return The decoded security id
 	 */
 	public BigInteger decodeSecurityID() {
 		return IdGen.fromString(securityID).toBigInteger();
@@ -184,7 +184,7 @@ public abstract class AbstractControlImpl implements SessionControl {
 	/**
 	 * Gets the byte field of the certificate
 	 * 
-	 * @return
+	 * @return Returns the byte field of the certificate
 	 */
 	protected byte[] getField0() {
 		return field0;
@@ -573,7 +573,7 @@ public abstract class AbstractControlImpl implements SessionControl {
 	/**
 	 * Gets a sorted array with all attribute names in ascending order.
 	 * 
-	 * @return
+	 * @return Returns the array of attribute names.
 	 */
 	public String[] getAttributeNames() {
 		String[] arr = attributes.keySet().toArray(new String[attributes.size()]);
@@ -586,7 +586,7 @@ public abstract class AbstractControlImpl implements SessionControl {
 	 * Gets an attribute
 	 * 
 	 * @param key The key of the attribute
-	 * @return
+	 * @return Returns the attribute value
 	 */
 	public Object getAttribute(String key) {
 		return attributes.get(key);
@@ -622,11 +622,13 @@ public abstract class AbstractControlImpl implements SessionControl {
 	//
 	
 	/**
-	 * @return
+	 * Converts the current time into a time prefix.
+	 * 
+	 * @return Returns the time prefix.
 	 */
 	protected String makeTimePrefix() {
 		long raw = System.currentTimeMillis();
-		int time = (int)(raw & maskTimePrefix); //0-65535
+		int time = (int)(raw & maskTimePrefix); //0-16777215
 		
 		StringBuffer buf = new StringBuffer( Integer.toHexString(time) );
 		for(int i=buf.length();i<sizeTimePrefix;i++)
@@ -636,16 +638,19 @@ public abstract class AbstractControlImpl implements SessionControl {
 	}
 	
 	/**
-	 * @param prefix
-	 * @return
+	 * Splits the time prefix from the key and gets the delta in ms from
+	 * the prefix and now.
+	 * 
+	 * @param prefix The whole key (prefix + shortTimePassword)
+	 * @return The delta time in ms from now.
 	 */
 	protected int getTime(String prefix) {
 		
 		String pre = prefix.substring(0, sizeTimePrefix);
-		int ref = Integer.valueOf(pre, 16); //0-16383
+		int ref = Integer.valueOf(pre, 16); //0-16777215
 		
 		long raw = System.currentTimeMillis();
-		int time = (int)(raw & maskTimePrefix); //0-16383
+		int time = (int)(raw & maskTimePrefix); //0-16777215
 		
 		// 0 1 2 3 4 0 1 2 3 4
 		// 0-1-2
@@ -727,8 +732,8 @@ public abstract class AbstractControlImpl implements SessionControl {
 	/**
 	 * Converts the buffer to an URL save base 64 String.
 	 * 
-	 * @param buffer
-	 * @return
+	 * @param buffer The byte array to convert
+	 * @return The converted buffer as an URL save base 64 String
 	 */
 	public String toBase64(byte[] buffer) {
 		return Base64.encodeBase64URLSafeString(buffer);
@@ -737,8 +742,8 @@ public abstract class AbstractControlImpl implements SessionControl {
 	/**
 	 * Converts a base 64 String to a byte array.
 	 * 
-	 * @param data
-	 * @return
+	 * @param data The URL save base 64 String
+	 * @return The byte array
 	 */
 	public byte[] fromBase64(String data) {
 		return Base64.decodeBase64( data );

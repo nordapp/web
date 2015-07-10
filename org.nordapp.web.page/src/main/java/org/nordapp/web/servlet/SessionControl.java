@@ -159,13 +159,13 @@ public interface SessionControl {
 	/**
 	 * Tests whether the session is valid or not.
 	 * 
-	 * @return
+	 * @return The flag
 	 */
 	boolean isValid();
 	
 	/**
 	 * Returns true if the WebApp is stateful.
-	 * @return
+	 * @return The flag
 	 */
 	boolean isStateful();
 	
@@ -174,7 +174,7 @@ public interface SessionControl {
 	 * 
 	 * @param factory The factory to get a new session
 	 * 
-	 * @return
+	 * @return The flag
 	 */
 	boolean ensureNew(Factory factory);
 	
@@ -191,14 +191,14 @@ public interface SessionControl {
 	/**
 	 * Decodes the public key of the certificate to a BigInteger
 	 * 
-	 * @return
+	 * @return The converted public key
 	 */
 	BigInteger decodeCert();
 	
 	/**
 	 * Decodes the security id to a BigInteger
 	 * 
-	 * @return
+	 * @return The converted security id
 	 */
 	BigInteger decodeSecurityID();
 	
@@ -212,8 +212,6 @@ public interface SessionControl {
 	 * Needs the certID and the mandatorID set.
 	 * 
 	 * <p>The shortTimePassword isn't decoded. It is the <b>certificate</b>.</p>
-	 * 
-	 * @param context The bundle context to get the service.
 	 */
 	void setShortTimePassword();
 	
@@ -224,8 +222,7 @@ public interface SessionControl {
 	 * 
 	 * <p>The shortTimePassword isn't decoded. It is the <b>certificate</b>.</p>
 	 * 
-	 * @param context The bundle context to get the service.
-	 * @return
+	 * @return The list of short time passwords
 	 */
 	List<String> getShortTimePassword();
 	
@@ -485,7 +482,7 @@ public interface SessionControl {
 	/**
 	 * Gets a sorted array with all attribute names in ascending order.
 	 * 
-	 * @return
+	 * @return The array containing the attribute names.
 	 */
 	String[] getAttributeNames();
 	
@@ -493,7 +490,7 @@ public interface SessionControl {
 	 * Gets an attribute
 	 * 
 	 * @param key The key of the attribute
-	 * @return
+	 * @return The value of the attribute.
 	 */
 	Object getAttribute(String key);
 	
@@ -553,16 +550,16 @@ public interface SessionControl {
 	/**
 	 * Converts the buffer to an URL save base 64 String.
 	 * 
-	 * @param buffer
-	 * @return
+	 * @param buffer The byte array to convert
+	 * @return The converted buffer as an URL save base 64 String
 	 */
 	String toBase64(byte[] buffer);
 	
 	/**
 	 * Converts a base 64 String to a byte array.
 	 * 
-	 * @param data
-	 * @return
+	 * @param data The URL save base 64 String
+	 * @return The byte array
 	 */
 	byte[] fromBase64(String data);
 	

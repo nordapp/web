@@ -56,7 +56,7 @@ public final class SessionControlImpl extends AbstractSessionControlImpl {
 	 * Ensure the session is a new session
 	 * Does nothing - clear the mandator to get a new session0
 	 * 
-	 * @return
+	 * @return The flag
 	 */
 	public boolean ensureNew(Factory factory) {
 		return false;
@@ -65,7 +65,7 @@ public final class SessionControlImpl extends AbstractSessionControlImpl {
 	/**
 	 * Tests whether the session is valid or not.
 	 * 
-	 * @return
+	 * @return The flag
 	 */
 	public boolean isValid() {
 		String cert = null; //TODO

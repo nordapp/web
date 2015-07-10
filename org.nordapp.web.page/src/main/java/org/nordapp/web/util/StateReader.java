@@ -53,7 +53,7 @@ public class StateReader {
 	 * Reads the state file
 	 * 
 	 * @param dest The destination of the file
-	 * @return
+	 * @return The list of valid states
 	 * @throws IOException
 	 */
 	public List<String> getState(String dest) throws IOException {
@@ -92,8 +92,8 @@ public class StateReader {
 	/**
 	 * Parses a line that defines an applications RESTful state.
 	 * 
-	 * @param line
-	 * @return
+	 * @param line The line to be parsed
+	 * @return The parsed line with the field-value pairs as elements of a map
 	 */
 	public Map<String, String> parseLine(String line) {
 		

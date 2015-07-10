@@ -226,7 +226,7 @@ public class LinkHeaderImpl implements LinkHeader {
 	 * protocol '://' host [ ':' port ]? '/' path '/' link 
 	 * 
 	 * @param link The link to be completed
-	 * @return
+	 * @return The completed link
 	 */
 	protected String complete(String link) {
 		if(link!=null && link.charAt(0)=='/') {
