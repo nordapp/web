@@ -12,8 +12,7 @@
   <parent>
     <groupId>org.i3xx.parent</groupId>
     <artifactId>parent-step-project</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-    <relativePath>/step/parent-step-project/pom.xml</relativePath>
+    <version>0.1.1</version>
   </parent>
 
   <properties>
