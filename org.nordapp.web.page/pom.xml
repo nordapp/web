@@ -12,6 +12,11 @@
   	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
   	<project.inceptionYear>2014</project.inceptionYear>
   </properties>
+
+  <scm>
+  	<developerConnection>scm:git:https://github.com/nordapp/web</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
   
   <parent>
     <groupId>org.i3xx.parent</groupId>
