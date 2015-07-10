@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.nordapp.web</groupId>
   <artifactId>org.nordapp.web.page</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>NordApp OfficeBase :: Web</name>
   <url>http://maven.apache.org</url>
@@ -23,7 +23,7 @@
   	<developerConnection>scm:git:https://github.com/nordapp/web</developerConnection>
   	<connection>scm:git:https://github.com/nordapp/web</connection>
   	<url>scm:git:https://github.com/nordapp/web</url>
-    <tag>org.nordapp.web.page-0.1.0</tag>
+    <tag>HEAD</tag>
   </scm>
   
   <dependencies>
