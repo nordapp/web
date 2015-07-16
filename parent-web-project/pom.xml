@@ -11,7 +11,7 @@
   <parent>
     <groupId>org.i3xx.parent</groupId>
     <artifactId>parent-step-project</artifactId>
-    <version>0.1.10</version>
+    <version>0.2.10</version>
   </parent>
 
   <properties>
