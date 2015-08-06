@@ -73,11 +73,24 @@ public class InitServlet extends HttpServlet {
 		
 		final String mandatorId = RequestPath.getMandator(req);
 		
+		String[] elem = RequestPath.getPath(req);
+		if(elem.length<3)
+			throw new MalformedURLException("The URL needs the form '"+
+					req.getServletPath()+"/id-of-the-mandator/group-id/artifact-id' but has '"+
+					req.getRequestURI()+"'");
+		
+		final String groupId = elem[1];
+		final String artifactId = elem[2];
+		
 		//SessionControl ctrl = new HttpSessionControlImpl(context, req.getSession());
 		SessionControl ctrl = new SessionControlImpl(context);
 		
 		//set mandatorId
 		ctrl.setMandatorID(mandatorId);
+		
+		//set groupId and artifactId
+		ctrl.setGroupID(groupId);
+		ctrl.setArtifactID(artifactId);
 		
 		//
 		// Create session id
@@ -96,7 +109,7 @@ public class InitServlet extends HttpServlet {
 		if(mandator==null)
 			throw new IOException("The mandator '"+mandatorId+"' is not available on this system.");
 		
-		String pwdTo = mandator.getProperty("password.timeout");
+		String pwdTo = mandator.getProperty(groupId+"."+artifactId+".password.timeout");
 		Integer pwdTimeout = new Integer(60000);
 		if(pwdTo!=null) {
 			try {
@@ -119,20 +132,11 @@ public class InitServlet extends HttpServlet {
 		String loginHtm = getInitParameter("startpage");
 		String resourcePath = getInitParameter("resource-path");
 		
-		String[] elem = RequestPath.getPath(req);
-		if(elem.length<3)
-			throw new MalformedURLException("The URL needs the form '"+
-					req.getServletPath()+"/id-of-the-mandator/group-id/artifact-id' but has '"+
-					req.getRequestURI()+"'");
-		
-		ctrl.setGroupID(elem[1]);
-		ctrl.setArtifactID(elem[2]);
-		
 		String dest = RequestPath.replacePath(resourcePath, loginHtm);
 		
 		if(logger.isDebugEnabled() || logger.isTraceEnabled()) {
 			logger.debug("Initialize app mandator: {}, group: {}, artifact: {}, timeout: {}, path: '{}', page: {}.",
-					mandatorId, elem[1], elem[2], pwdTimeout, mandator.getPath(), dest);
+					mandatorId, groupId, artifactId, pwdTimeout, mandator.getPath(), dest);
 		}else{
 			logger.info("Initialize app mandator: {}, group: {}, artifact: {}, timeout: {}", mandatorId, elem[1], elem[2], pwdTimeout);
 		}
