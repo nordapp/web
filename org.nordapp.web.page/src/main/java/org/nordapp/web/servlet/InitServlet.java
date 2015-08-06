@@ -64,6 +64,8 @@ public class InitServlet extends HttpServlet {
 		super();
 		
 		this.context = context;
+		
+		logger.debug("Current build 1012.");
 	}
 	
 	@Override
