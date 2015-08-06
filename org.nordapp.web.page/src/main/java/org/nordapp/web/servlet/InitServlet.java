@@ -110,6 +110,20 @@ public class InitServlet extends HttpServlet {
 			throw new IOException("The mandator '"+mandatorId+"' is not available on this system.");
 		
 		String pwdTo = mandator.getProperty(groupId+"."+artifactId+".password.timeout");
+		if(logger.isDebugEnabled()) {
+			
+			logger.debug("Mandator debug factory-id:{} service-id:{} id:{} root:{} title:{} path:{}", mandator.getFactoryPid(),
+					mandator.getServicePid(),
+					mandator.getId(),
+					mandator.getRoot(),
+					mandator.getTitle(),
+					mandator.getPath()
+					);
+			String[] ar = mandator.getPropertyKeys();
+			for(int i=0;ar!=null && i<ar.length;i++){
+				logger.debug("Mandator property {}='{}'", ar[i], mandator.getProperty(ar[i]));
+			}
+		}
 		Integer pwdTimeout = new Integer(60000);
 		if(pwdTo!=null) {
 			try {
