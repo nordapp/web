@@ -105,19 +105,19 @@
 		<groupId>commons-fileupload</groupId>
 		<artifactId>commons-fileupload</artifactId>
 	</dependency>
-	<dependency>
+	<!--<dependency>
 		<groupId>portlet-api</groupId>
 		<artifactId>portlet-api</artifactId>
-	</dependency>
+	</dependency>-->
 	
 	<dependency>
 		<groupId>org.apache.felix</groupId>
 		<artifactId>org.apache.felix.configadmin</artifactId>
 	</dependency>
-	<dependency>
+	<!--<dependency>
 		<groupId>org.apache.karaf.shell</groupId>
 		<artifactId>org.apache.karaf.shell.console</artifactId>
-	</dependency>
+	</dependency>-->
 	
 	<dependency>
 		<groupId>org.osgi</groupId>
