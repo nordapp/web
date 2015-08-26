@@ -28,6 +28,7 @@ import java.util.List;
 
 import javax.servlet.Servlet;
 
+import org.i3xx.step.zero.security.NaSecurityUtil;
 import org.nordapp.web.servlet.DEVServlet;
 import org.nordapp.web.servlet.DebugSessionServlet;
 import org.nordapp.web.servlet.FileServlet;
@@ -66,6 +67,8 @@ public class NordApp implements BundleActivator {
 		logger.info("Nordapp service started");
 		
 		String initStartPage = "init.htm";
+		
+		NaSecurityUtil.setSecurityManager(null);
 		
 		Dictionary<String, Object> props = null;
 		
