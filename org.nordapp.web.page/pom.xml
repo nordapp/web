@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.nordapp.web</groupId>
   <artifactId>org.nordapp.web.page</artifactId>
-  <version>0.1.1.1-SNAPSHOT</version>
+  <version>0.1.1.2-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>NordApp OfficeBase :: Web</name>
   <url>http://maven.apache.org</url>
