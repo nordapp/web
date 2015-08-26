@@ -29,6 +29,7 @@ import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -120,7 +121,14 @@ public class SessionCallServlet extends HttpServlet {
 		ctrl.setAll();
 		ctrl.saveTempSession();
 		
-		process(ctrl, req, resp, null);
+		Enumeration<String> en = req.getParameterNames();
+		Map<String, Object> res = new HashMap<String, Object>();
+		while(en.hasMoreElements()){
+			String nm = en.nextElement();
+			res.put(nm, req.getParameter(nm));
+		}
+		
+		process(ctrl, req, resp, (res.isEmpty()?null:res) );
 		
 		}catch(Exception e){
 			ResponseHandler rsHdl = new ResponseHandler(context, null);
